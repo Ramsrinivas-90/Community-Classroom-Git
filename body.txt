@@ -1,0 +1,28 @@
+ <h4> Bayview: </h4> <p>No Docs uploaded in last 24 hours </p>
+        
+        <h4>Pyro V2 Originations:</h4><p>Total Docs uploaded in last 24 hours - 185 </p>
+        <table>
+            <tr>
+                <th>Type/HITL Status</th>
+                <th>HITL Queued</th>
+                <th>HITL Success</th>
+            </tr>
+            <tr>
+                <th>Classification</th>
+                <td>0</td><td>185</td>     
+            </tr>
+            <tr>
+                <th>Extraction</th>
+                <td>2</td><td>169</td>
+            </tr>
+        </table>    
+    
+    <br>
+    <p>Below is the split up of documents for extraction HITL Success Notified,</p>
+    <table>
+        <tr>
+            <th>DocType</th>
+            <th>Count</th>
+        </tr>
+        <p><tr><td>W2</td><td>73</td></tr><tr><td>LBSSecurity</td><td>5</td></tr><tr><td>1099SM</td><td>4</td></tr><tr><td>Paystub</td><td>61</td></tr><tr><td>Note</td><td>1</td></tr><tr><td>SSN</td><td>11</td></tr><tr><td>TRFORM1040</td><td>5</td></tr><tr><td>1099R</td><td>1</td></tr><tr><td>TRTRANSCRIPT</td><td>1</td></tr><tr><td>StmntBank</td><td>3</td></tr><tr><td>VoeEF</td><td>1</td></tr><tr><td>LBRetirement</td><td>2</td></tr><tr><td>COE</td><td>1</td></tr></p>
+    </table>
