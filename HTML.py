@@ -2,26 +2,24 @@ from PyroFormator import *
 from BVFormator import *
 
 style = """
-table
-    { 
-        border-collapse:collapse; 
-        width:match-content;
+    table {
+    border-collapse: collapse;
+    width: match-content;
     }
-td, th
-    {
-        border: 1px solid black; 
-        text-align: left; 
-        padding: 5px; 
-        width:match-content; 
-        text-align: center;
+    td,
+    th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 5px;
+    width: match-content;
+    text-align: center;
     }
-tr:nth-child(even)
-    {
+    tr:nth-child(even) {
     background-color: #f2f2f2;
     }
-body{
+    body {
     font-family: apple-system, BlinkMacSystemFont, sans-serif;
-    color:#2f55a4
+    color: #2f55a4;
     }
 """
 
