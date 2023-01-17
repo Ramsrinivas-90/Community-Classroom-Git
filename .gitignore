@@ -4,9 +4,9 @@ __pycache__/
 
 .idea/
 
-body.txt
+.txt
 
 
 .env
 
-./temp
+.temp/

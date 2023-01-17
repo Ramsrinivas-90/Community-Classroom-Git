@@ -1,4 +1,3 @@
-from re import I
 from MailQueries import *
 from CommonFunction import *
 from env import BVDBPassword, BVDBUserName
