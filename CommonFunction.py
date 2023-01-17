@@ -24,7 +24,7 @@ def queryRun(queryList, cursor):
 
 
 # Generating HTML based String for mail body
-def formatter(classificationHITL, extractionHITL, useCase, totalCount):
+def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCount):
     HITLModifyTable = ''
     HITLTableList = [classificationHITL, extractionHITL]
     HITLResultList = []
@@ -38,6 +38,18 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount):
                     str(HITLTableList[j][i][2])+'</td>'
         HITLResultList.append(HITLModifyTable)
         HITLModifyTable = ''
+
+    splitCountTable = ''
+
+    # initializing loop length
+    batchLoop = len(splitCount)
+
+    # formatting split count table of ext for HTML
+    for i in range(0, batchLoop):
+        splitCountTable += '<tr>' + \
+            '<td>' + splitCount[i][0]+'</td>' + \
+            '<td>' + str(splitCount[i][1]) + '</td>' + \
+            '</tr>'
 
     HITLTable = f'''
         <h4>{useCase}:</h4><p>Total Docs uploaded in last 24 hours - {totalCount} </p>
@@ -55,8 +67,18 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount):
                 <th>Extraction</th>
                 {HITLResultList[1]}
             </tr>
-        </table>    
+       </table>   
+        <br>
+        <p>Below is the split up of documents for extraction HITL Success Notified,</p>
+        <table>
+            <tr>
+                <th>DocType</th>
+                <th>Count</th>
+            </tr>
+            <p>{splitCountTable}</p>
+        </table> 
     '''
+
     if totalCount == 0:
         return f"""<h4> {useCase}: </h4> <p>No Docs uploaded in last 24 hours </p>"""
     return HITLTable

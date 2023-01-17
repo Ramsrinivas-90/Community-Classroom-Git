@@ -1,13 +1,11 @@
-
-
-from MailQueriesPyro import *
+from MailQueries import *
 from CommonFunction import *
-from Secrets import PYRODBPassword, PYRODBUserName
+from env import PYRODBPassword, PYRODBUserName
 ICEe = DBConnect(PYRODBUserName, PYRODBPassword, "3300")
 
 # list of queries to get data for mail
-queriesListPyro = [classificationDetailsPyro,
-                   extractionDetailsPyro, totalCountPyro, splitCountPyro]
+queriesListPyro = [classificationDetails,
+                   extractionDetails, totalCount, splitCount]
 
 # mysql cursor for executing query
 cursorPyro = ICEe.cursor()
@@ -21,9 +19,6 @@ classificationHITL = resultListPyro[0]
 # fetching extraction HITL counts both queued and success notified
 extractionHITL = resultListPyro[1]
 
-# initializing total extraction count
-extractionSuccess = 0
-
 # fetching total number of docs uploaded
 totalDocPyro = resultListPyro[2][0][0]
 
@@ -32,19 +27,19 @@ splitCountExtrctnPyro = resultListPyro[3]
 
 # calling formatter method from commonFunction to get HTML Format of cls and ext HITL Table
 pyroHITLResult = formatter(
-    classificationHITL, extractionHITL, "Pyro V2 Originations", totalDocPyro)
+    classificationHITL, extractionHITL, "Pyro V2 Originations", totalDocPyro, splitCountExtrctnPyro)
 
 
-# initializing empty string for formatting HTML for split count of ext
-splitCountTable = ''
+# # initializing empty string for formatting HTML for split count of ext
+# splitCountTable = ''
 
-# initializing loop length
-batchLoop = len(splitCountExtrctnPyro)
+# # initializing loop length
+# batchLoop = len(splitCountExtrctnPyro)
 
-# formatting split count table of ext for HTML
-for i in range(0, batchLoop):
-    splitCountTable += '<tr>' + \
-        '<td>' + splitCountExtrctnPyro[i][0]+'</td>' + \
-        '<td>' + str(splitCountExtrctnPyro[i][1]) + '</td>' + \
-        '</tr>'
-    extractionSuccess += splitCountExtrctnPyro[i][1]
+# # formatting split count table of ext for HTML
+# for i in range(0, batchLoop):
+#     splitCountTable += '<tr>' + \
+#         '<td>' + splitCountExtrctnPyro[i][0]+'</td>' + \
+#         '<td>' + str(splitCountExtrctnPyro[i][1]) + '</td>' + \
+#         '</tr>'
+#     extractionSuccess += splitCountExtrctnPyro[i][1]

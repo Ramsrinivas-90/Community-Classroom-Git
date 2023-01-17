@@ -1,5 +1,5 @@
-from PyroFormator import *
-from BVFormator import *
+from PyroFormator import pyroHITLResult
+from BVFormator import BVHITLResult
 
 style = """
     table {
@@ -32,31 +32,17 @@ HTMLBody = f'''
     </head>
     <body>
         {BVHITLResult}
-        {pyroHITLResult}
     <br>
-    <p>Below is the split up of documents for extraction HITL Success Notified,</p>
-    <table>
-        <tr>
-            <th>DocType</th>
-            <th>Count</th>
-        </tr>
-        <p>{splitCountTable}</p>
-    </table>
+        {pyroHITLResult}
     </body>
 </html>  
 '''
 mailAttachment = f""" 
     {BVHITLResult}
     {pyroHITLResult}
-    <br>
-    <p>Below is the split up of documents for extraction HITL Success Notified,</p>
-    <table>
-        <tr>
-            <th>DocType</th>
-            <th>Count</th>
-        </tr>
-        <p>{splitCountTable}</p>
-    </table>"""
+"""
 
 with open("body.txt", "w") as file:
     file.write(mailAttachment)
+
+print(HTMLBody)
