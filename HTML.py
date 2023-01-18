@@ -1,5 +1,6 @@
 from PyroFormator import pyroHITLResult
 from BVFormator import BVHITLResult
+from FlowFormator import flowFinalResults
 
 style = """
     table {
@@ -34,12 +35,15 @@ HTMLBody = f'''
         {BVHITLResult}
     <br>
         {pyroHITLResult}
+    <br>
+        {flowFinalResults}
     </body>
 </html>  
 '''
 mailAttachment = f""" 
     {BVHITLResult}
     {pyroHITLResult}
+    {flowFinalResults}
 """
 
 with open("body.txt", "w") as file:

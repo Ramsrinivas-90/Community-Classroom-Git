@@ -3,10 +3,9 @@ __pycache__/
 *.pyc[cod]
 
 .idea/
-
-.txt
-
-
+temp/
+extras/
+body.txt
 .env
 
-.temp/
+
