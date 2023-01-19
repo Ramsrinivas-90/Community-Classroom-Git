@@ -23,7 +23,37 @@ def queryRun(queryList, cursor):
     return resultList
 
 
+def extractionDocTable(splitCount, useCase):
+    splitCountTable = ''
+
+    # initializing loop length
+    batchLoop = len(splitCount)
+    sentence = ''
+    if (useCase == 'FLOW'):
+        sentence = 'completed'
+    else:
+        sentence = 'HITL Success Notified'
+    # formatting split count table of ext for HTML
+    for i in range(0, batchLoop):
+        splitCountTable += '<tr>' + \
+            '<td>' + splitCount[i][0]+'</td>' + \
+            '<td>' + str(splitCount[i][1]) + '</td>' + \
+            '</tr>'
+    extCountTable = f'''
+        <p> Below is the split up of documents for extraction {sentence}, </p>
+        <table>
+            <tr>
+                <th> DocType </th>
+                <th> Count </th>
+            </tr>
+        <p> {splitCountTable}</p>
+        </table>
+        '''
+    return extCountTable
+
 # Generating HTML based String for mail body
+
+
 def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCount):
     HITLModifyTable = ''
     HITLTableList = [classificationHITL, extractionHITL]
@@ -38,19 +68,7 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
                     str(HITLTableList[j][i][2])+'</td>'
         HITLResultList.append(HITLModifyTable)
         HITLModifyTable = ''
-
-    splitCountTable = ''
-
-    # initializing loop length
-    batchLoop = len(splitCount)
-
-    # formatting split count table of ext for HTML
-    for i in range(0, batchLoop):
-        splitCountTable += '<tr>' + \
-            '<td>' + splitCount[i][0]+'</td>' + \
-            '<td>' + str(splitCount[i][1]) + '</td>' + \
-            '</tr>'
-
+    splitCountTable = extractionDocTable(splitCount, useCase)
     HITLTable = f'''
         <h4>{useCase}:</h4><p>Total Docs uploaded in last 24 hours - {totalCount} </p>
         <table>
@@ -69,14 +87,8 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
             </tr>
        </table>   
         <br>
-        <p>Below is the split up of documents for extraction HITL Success Notified,</p>
-        <table>
-            <tr>
-                <th>DocType</th>
-                <th>Count</th>
-            </tr>
-            <p>{splitCountTable}</p>
-        </table> 
+            {splitCountTable}
+        <br>
     '''
 
     if totalCount == 0:
