@@ -70,7 +70,7 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
         HITLModifyTable = ''
     splitCountTable = extractionDocTable(splitCount, useCase)
     HITLTable = f'''
-        <h4>{useCase}:</h4><p>Total Docs uploaded in last 24 hours - {totalCount} </p>
+        <h3>{useCase}:</h3><p>Total Docs uploaded in last 24 hours - {totalCount} </p>
         <table>
             <tr>
                 <th>Type/HITL Status</th>
@@ -92,5 +92,5 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
     '''
 
     if totalCount == 0:
-        return f"""<h4> {useCase}: </h4> <p>No Docs uploaded in last 24 hours </p>"""
+        return f"""<h3> {useCase}: </h3> <p>No Docs uploaded in last 24 hours </p>"""
     return HITLTable

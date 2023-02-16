@@ -20,15 +20,16 @@ totalCount = 0
 completed = 0
 fileValidationFailed = 0
 loanValidationFailed = 0
-
-if flowSellers and flowClsCompleted and flowClassification:
+flowFinalResults = "<h3>Flow:</h3>"
+if flowSellers and (flowClsCompleted or flowClassification):
     for i in range(len(flowClassification)):
         if flowClassification[i][0] == "Loan Validation":
             loanValidationFailed = flowClassification[i][2]
         elif flowClassification[i][0] == "File Validation":
             fileValidationFailed = flowClassification[i][2]
         totalCount += flowClassification[i][2]
-    completed = flowClsCompleted[0][2]
+    if len(flowClsCompleted) > 0:
+        completed = flowClsCompleted[0][2]
     flowSellerDetails = ''
 
     batchLoop = len(flowSellers)
@@ -39,7 +40,7 @@ if flowSellers and flowClsCompleted and flowClassification:
                              '<td>' + str(flowSellers[i][2]) + '</td>' + \
                              '</tr>'
     extDocTable = extractionDocTable(flowExtCompleted, 'FLOW')
-    flowFinalResults = f"""<h4>Flow:</h4>
+    flowFinalResults += f"""
         <table id="flow">
         <tr>
             <th>Total Docs</th>
@@ -68,5 +69,4 @@ if flowSellers and flowClsCompleted and flowClassification:
         {extDocTable}
         """
 else:
-    flowFinalResults = """<h4>Flow:</h4>
-        <p>No Docs were uploaded in last 24 hours.</p>"""
+    flowFinalResults += "<p>No Docs were uploaded in last 24 hours.</p>"
