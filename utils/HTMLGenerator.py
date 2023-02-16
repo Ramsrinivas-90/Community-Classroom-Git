@@ -1,6 +1,6 @@
-from PyroFormator import pyroHITLResult
-from BVFormator import BVHITLResult
-from FlowFormator import flowFinalResults
+from services.PyroService import pyroHITLResult
+from services.BVService import BVHITLResult
+from services.FlowService import flowFinalResults
 
 style = """
     table {
