@@ -1,7 +1,7 @@
 from MailQueriesFlow import *
 from CommonFunction import *
 from env import PYRODBPassword, PYRODBUserName
-ICEe = DBConnect(PYRODBUserName, PYRODBPassword, "3300")
+ICEe = DBConnect(PYRODBUserName, PYRODBPassword, "3387")
 
 # list of queries to get data for mail
 queriesListFLOW = [flowQuery,

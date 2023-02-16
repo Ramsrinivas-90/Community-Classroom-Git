@@ -40,13 +40,5 @@ HTMLBody = f'''
     </body>
 </html>  
 '''
-mailAttachment = f""" 
-    {BVHITLResult}
-    {pyroHITLResult}
-    {flowFinalResults}
-"""
-
-with open("body.txt", "w") as file:
-    file.write(mailAttachment)
 
 print(HTMLBody)
