@@ -34,15 +34,15 @@ for i in range(0, len(batchList)):
             batchDict[batchList[i]].append(batch[j][1])
          
 
-# finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
+finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
 
 
-# def txtFile(inptDict):
-#     updDict = json.dumps(inptDict)
-#     with open(path, 'w') as f:
-#         f.write("%s\n" % updDict)
+def txtFile(inptDict):
+    updDict = json.dumps(inptDict)
+    with open(path, 'w') as f:
+        f.write("%s\n" % updDict)
 
 
-# print(batchDict)
-# txtFile(finalJson)
+print(finalJson)
+txtFile(finalJson)
 
