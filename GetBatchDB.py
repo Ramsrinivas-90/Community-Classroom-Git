@@ -1,10 +1,10 @@
 from datetime import date
 from datetime import timedelta
 from CommonFunction import queryRun, DBConnect
-from env import BBDBPassword, BBDBUserName
+from env import BBDBPassword, BBDBUserName , BBDBPORT
 import json
 
-ICEe = DBConnect(BBDBUserName, BBDBPassword, "3388")
+ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPORT)
 cursorBB = ICEe.cursor()
 
 path = 'Batches.json'
