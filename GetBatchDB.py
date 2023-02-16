@@ -16,7 +16,7 @@ def get_batch(inptDate):
         inptDate)]
     get_batch_result = queryRun(getBatchQuery, cursorBB)
 
-    return get_batch_result
+    return get_batch_result[0]
 
 
 batch = get_batch(yesterday)
@@ -32,8 +32,9 @@ for i in range(0, len(batchList)):
     for j in range(0, len(batch)):
         if batch[j][0] == batchList[i]:
             batchDict[batchList[i]].append(batch[j][1])
+         
 
-finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
+# finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
 
 
 # def txtFile(inptDict):
@@ -42,6 +43,6 @@ finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
 #         f.write("%s\n" % updDict)
 
 
-print(batchDict)
+# print(batchDict)
 # txtFile(finalJson)
 
