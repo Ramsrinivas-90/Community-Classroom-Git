@@ -1,7 +1,7 @@
-from services.MailFormator import *
-from services.PyroFormator import pyroHITLResult
-from services.BVFormator import BVHITLResult
-from services.FlowFormator import flowFinalResults
+from services.BBService import *
+from services.PyroService import pyroHITLResult
+from services.BVService import BVHITLResult
+from services.FlowService import flowFinalResults
 
 style = '''
 table {

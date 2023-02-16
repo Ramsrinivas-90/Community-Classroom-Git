@@ -1,5 +1,5 @@
 import win32com.client as client
-from utils.htmlGenerator import htmlbody
+from utils.HTMLGenerator import htmlbody
 
 outlook = client.Dispatch('Outlook.Application')
 mail = outlook.CreateItem(0)

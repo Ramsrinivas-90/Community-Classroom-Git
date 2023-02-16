@@ -1,11 +1,51 @@
-from queries.MailQueriesMag import *
-from queries.MailQueriesBB import *
-from GetBatchDB import *
-from utils.functionUtils import *
-from utils.env import BBDBPassword, BBDBUserName
+from queries.MAG import *
+from queries.BB import *
+from utils.FunctionUtils import *
+from datetime import date
+from datetime import timedelta
+from utils.Env import BBDBPassword, BBDBUserName
+import json
 
-ICEe = DBConnect(BBDBUserName, BBDBPassword, "3388")
+ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPORT)
 cursorBB = ICEe.cursor()
+path = '../Batches.json'
+yesterday = date.today() - timedelta(1)
+
+
+def get_batch(inptDate):
+    getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,SII.CRE_DTTM FROM ICE_Ingestion.STG_ICEIngestion SII 
+    join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" 
+    order by SII.Batch_ID; """.format(
+        inptDate)]
+    get_batch_result = queryRun(getBatchQuery, cursorBB)
+
+    return get_batch_result[0]
+
+
+batch = get_batch(yesterday)
+
+batchList = []
+for i in range(0, len(batch)):
+    batchList.append(batch[i][0])
+
+batchDict = {}
+for i in range(0, len(batchList)):
+    batchDict[batchList[i]] = []
+    for j in range(0, len(batch)):
+        if batch[j][0] == batchList[i]:
+            batchDict[batchList[i]].append(batch[j][1])
+
+finalJson = {yesterday.strftime("%Y-%m-%d"): batchDict}
+
+
+def txtFile(inptDict):
+    updDict = json.dumps(inptDict)
+    with open(path, 'w') as f:
+        f.write("%s\n" % updDict)
+
+
+print(finalJson)
+txtFile(finalJson)
 
 queriesListMag = [magNOTE, magMortgage, magAppraisal, mag1003, magW9, magSSN, magCD]
 queriesListBB = [classificationQuery, extractionQuery, ingestionBlobs]

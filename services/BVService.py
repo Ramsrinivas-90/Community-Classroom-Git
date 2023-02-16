@@ -1,6 +1,6 @@
-from queries.MailQueries import *
-from utils.functionUtils import *
-from utils.env import BVDBPassword, BVDBUserName, BVDBPORT
+from queries.Pyro import *
+from utils.FunctionUtils import *
+from utils.Env import BVDBPassword, BVDBUserName, BVDBPORT
 ICEe = DBConnect(BVDBUserName, BVDBPassword,BVDBPORT)
 
 
