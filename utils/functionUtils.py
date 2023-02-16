@@ -29,16 +29,16 @@ def extractionDocTable(splitCount, useCase):
     # initializing loop length
     batchLoop = len(splitCount)
     sentence = ''
-    if (useCase == 'FLOW'):
+    if useCase == 'FLOW':
         sentence = 'completed'
     else:
         sentence = 'HITL Success Notified'
     # formatting split count table of ext for HTML
     for i in range(0, batchLoop):
         splitCountTable += '<tr>' + \
-            '<td>' + splitCount[i][0]+'</td>' + \
-            '<td>' + str(splitCount[i][1]) + '</td>' + \
-            '</tr>'
+                           '<td>' + splitCount[i][0] + '</td>' + \
+                           '<td>' + str(splitCount[i][1]) + '</td>' + \
+                           '</tr>'
     extCountTable = f'''
         <p> Below is the split up of documents for extraction {sentence}, </p>
         <table>
@@ -51,9 +51,8 @@ def extractionDocTable(splitCount, useCase):
         '''
     return extCountTable
 
+
 # Generating HTML based String for mail body
-
-
 def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCount):
     HITLModifyTable = ''
     HITLTableList = [classificationHITL, extractionHITL]
@@ -62,10 +61,10 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
         for i in range(len(HITLTableList[j])):
             if len(HITLTableList[j]) == 1:
                 HITLModifyTable += '<td>0</td><td>' + \
-                    str(HITLTableList[j][i][2])+'</td>'
+                                   str(HITLTableList[j][i][2]) + '</td>'
             else:
                 HITLModifyTable += '<td>' + \
-                    str(HITLTableList[j][i][2])+'</td>'
+                                   str(HITLTableList[j][i][2]) + '</td>'
         HITLResultList.append(HITLModifyTable)
         HITLModifyTable = ''
     splitCountTable = extractionDocTable(splitCount, useCase)

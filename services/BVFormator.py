@@ -1,7 +1,7 @@
-from MailQueries import *
-from CommonFunction import *
-from env import BVDBPassword, BVDBUserName
-ICEe = DBConnect(BVDBUserName, BVDBPassword, "3300")
+from queries.MailQueries import *
+from utils.functionUtils import *
+from utils.env import BVDBPassword, BVDBUserName, BVDBPORT
+ICEe = DBConnect(BVDBUserName, BVDBPassword,BVDBPORT)
 
 
 # list of queries to get data for mail

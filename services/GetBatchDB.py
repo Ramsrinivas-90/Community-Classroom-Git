@@ -1,18 +1,20 @@
 from datetime import date
 from datetime import timedelta
-from CommonFunction import queryRun, DBConnect
-from env import BBDBPassword, BBDBUserName , BBDBPORT
+from utils.functionUtils import queryRun, DBConnect
+from utils.env import BBDBPassword, BBDBUserName , BBDBPORT
 import json
 
 ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPORT)
 cursorBB = ICEe.cursor()
 
-path = 'Batches.json'
+path = '../Batches.json'
 yesterday = date.today() - timedelta(1)
 
 
 def get_batch(inptDate):
-    getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,SII.CRE_DTTM FROM ICE_Ingestion.STG_ICEIngestion SII join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" order by SII.Batch_ID; """.format(
+    getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,SII.CRE_DTTM FROM ICE_Ingestion.STG_ICEIngestion SII 
+    join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" 
+    order by SII.Batch_ID; """.format(
         inptDate)]
     get_batch_result = queryRun(getBatchQuery, cursorBB)
 
