@@ -1,6 +1,7 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPORT
+from Env import PYRODBPassword, PYRODBUserName, PYRODBPORT
+
 ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPORT)
 
 # list of queries to get data for mail

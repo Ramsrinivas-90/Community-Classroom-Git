@@ -10,6 +10,7 @@ def DBConnect(user, password, port):
         database="ICEe",
         port=port
     )
+    print("DB connected successfully")
     return ICEe
 
 

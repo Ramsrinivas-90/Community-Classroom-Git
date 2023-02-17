@@ -1,7 +1,7 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from utils.Env import BVDBPassword, BVDBUserName, BVDBPORT
-ICEe = DBConnect(BVDBUserName, BVDBPassword,BVDBPORT)
+from Env import BVDBPassword, BVDBUserName
+ICEe = DBConnect(BVDBUserName, BVDBPassword, "3301")
 
 
 # list of queries to get data for mail

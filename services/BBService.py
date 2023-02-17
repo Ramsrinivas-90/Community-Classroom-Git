@@ -3,7 +3,7 @@ from queries.BB import *
 from utils.FunctionUtils import *
 from datetime import date
 from datetime import timedelta
-from utils.Env import BBDBPassword, BBDBUserName
+from Env import BBDBPassword, BBDBUserName, BBDBPORT
 import json
 
 ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPORT)
