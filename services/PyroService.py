@@ -1,6 +1,6 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from Env import PYRODBPassword, PYRODBUserName, PYRODBPORT
+from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPORT
 
 ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPORT)
 

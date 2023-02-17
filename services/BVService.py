@@ -1,6 +1,6 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from Env import BVDBPassword, BVDBUserName
+from utils.Env import BVDBPassword, BVDBUserName
 ICEe = DBConnect(BVDBUserName, BVDBPassword, "3301")
 
 
