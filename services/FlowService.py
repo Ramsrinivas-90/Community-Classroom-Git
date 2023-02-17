@@ -1,7 +1,7 @@
 from queries.Flow import *
 from utils.FunctionUtils import *
-from utils.Env import PYRODBPassword, PYRODBUserName
-ICEe = DBConnect(PYRODBUserName, PYRODBPassword, "3300")
+from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPort
+ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
 
 # list of queries to get data for mail
 queriesListFLOW = [flowQuery,
