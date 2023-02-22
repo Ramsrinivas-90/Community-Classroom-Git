@@ -49,4 +49,4 @@ mailAttachment = f"""
 with open("body.txt", "w") as file:
     file.write(mailAttachment)
 
-print(HTMLBody)
+print("Generated HTML Content")

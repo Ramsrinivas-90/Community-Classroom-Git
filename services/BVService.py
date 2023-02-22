@@ -28,3 +28,5 @@ splitCountExtrctnBV = resultListBV[3]
 # calling formatter method from commonFunction to get HTML Format of cls and ext HITL Table
 BVHITLResult = formatter(classificationHITLBV,
                          extractionHITLBV, "Bayview", totalDocBV, splitCountExtrctnBV)
+
+print("Bayview Done")

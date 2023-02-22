@@ -29,7 +29,7 @@ splitCountExtrctnPyro = resultListPyro[3]
 pyroHITLResult = formatter(
     classificationHITL, extractionHITL, "Pyro V2 Originations", totalDocPyro, splitCountExtrctnPyro)
 
-
+print("PYRO Done")
 # # initializing empty string for formatting HTML for split count of ext
 # splitCountTable = ''
 

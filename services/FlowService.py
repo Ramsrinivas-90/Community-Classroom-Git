@@ -70,3 +70,6 @@ if flowSellers and (flowClsCompleted or flowClassification):
         """
 else:
     flowFinalResults += "<p>No Docs were uploaded in last 24 hours.</p>"
+
+
+print("Flow Done")
