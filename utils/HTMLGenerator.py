@@ -8,6 +8,8 @@ from concurrent.futures import ThreadPoolExecutor
 resultList = []
 
 start = time.perf_counter()
+
+
 def run_io_tasks_in_parallel(tasks):
     with ThreadPoolExecutor() as executor:
         running_tasks = [executor.submit(task) for task in tasks]
@@ -16,8 +18,8 @@ def run_io_tasks_in_parallel(tasks):
 
 
 run_io_tasks_in_parallel([
-    lambda: pyroService(),
     lambda: bvService(),
+    lambda: pyroService(),
     lambda: flowService()
 ])
 
@@ -68,5 +70,5 @@ mailAttachment = f"""
 with open("body.txt", "w") as file:
     file.write(mailAttachment)
 end = time.perf_counter()
-print(f'elapsed {end-start:0.2f} seconds')
+print(f'elapsed {end - start:0.2f} seconds')
 print("Generated HTML Content")

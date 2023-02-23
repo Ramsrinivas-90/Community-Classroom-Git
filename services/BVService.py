@@ -1,14 +1,14 @@
-from queries.Pyro import *
+from queries.BV import *
 from utils.FunctionUtils import *
-from utils.Env import BVDBUserName
+from utils.Env import BVDBUserName, BVDBPassword, BVDBPort
 
 
 def bvService():
-    ICEe = DBConnect(BVDBUserName, "3853f16cc36e7a84", 3301)
+    ICEe = DBConnect(BVDBUserName,BVDBPassword, BVDBPort)
 
     # resultList of queries to get data for mail
-    queriesListBV = [classificationDetails,
-                     extractionDetails, totalCount, splitCount]
+    queriesListBV = [classificationDetailsBV,
+                     extractionDetailsBV, totalCountBV, splitCountBV]
     # mysql cursor for executing query
     cursorBV = ICEe.cursor()
 
