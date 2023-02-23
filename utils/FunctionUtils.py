@@ -1,17 +1,42 @@
+import concurrent.futures
+import multiprocessing
+from concurrent.futures import ThreadPoolExecutor, as_completed, ProcessPoolExecutor
+import time
+import random
+
 import mysql.connector
 
 
 # connecting to DB when required
 def DBConnect(user, password, port):
-    ICEe = mysql.connector.connect(
-        host="127.0.0.1",
-        user=user,
-        password=password,
-        database="ICEe",
-        port=port
-    )
-    return ICEe
+    try:
+        ICEe = mysql.connector.connect(
+            host="127.0.0.1",
+            user=user,
+            password=password,
+            database="ICEe",
+            port=port
+        )
+        print("DB connection acquired")
+        return ICEe
+    except:
+        print("Error connecting to DB")
 
+
+def processQuery(queryList, cursor):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+
+        futures = []
+
+        for query in queryList:
+            futures.append(executor.submit(queryR(query,cursor)))
+
+
+def queryR(query, cursor) -> list:
+    cursor.execute(query)
+    count = cursor.fetchall()
+    print(count)
+    return count
 
 # function to execute queries and fetching results
 def queryRun(queryList, cursor):
@@ -36,9 +61,9 @@ def extractionDocTable(splitCount, useCase):
     # formatting split count table of ext for HTML
     for i in range(0, batchLoop):
         splitCountTable += '<tr>' + \
-            '<td>' + splitCount[i][0]+'</td>' + \
-            '<td>' + str(splitCount[i][1]) + '</td>' + \
-            '</tr>'
+                           '<td>' + splitCount[i][0] + '</td>' + \
+                           '<td>' + str(splitCount[i][1]) + '</td>' + \
+                           '</tr>'
     extCountTable = f'''
         <p> Below is the split up of documents for extraction {sentence}, </p>
         <table>
@@ -51,6 +76,7 @@ def extractionDocTable(splitCount, useCase):
         '''
     return extCountTable
 
+
 # Generating HTML based String for mail body
 
 
@@ -62,10 +88,10 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
         for i in range(len(HITLTableList[j])):
             if len(HITLTableList[j]) == 1:
                 HITLModifyTable += '<td>0</td><td>' + \
-                    str(HITLTableList[j][i][2])+'</td>'
+                                   str(HITLTableList[j][i][2]) + '</td>'
             else:
                 HITLModifyTable += '<td>' + \
-                    str(HITLTableList[j][i][2])+'</td>'
+                                   str(HITLTableList[j][i][2]) + '</td>'
         HITLResultList.append(HITLModifyTable)
         HITLModifyTable = ''
     splitCountTable = extractionDocTable(splitCount, useCase)

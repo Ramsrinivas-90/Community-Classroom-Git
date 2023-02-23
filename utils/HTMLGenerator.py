@@ -1,6 +1,25 @@
-from services.PyroService import pyroHITLResult
-from services.BVService import BVHITLResult
-from services.FlowService import flowFinalResults
+import time
+
+from services.PyroService import pyroService
+from services.BVService import bvService
+from services.FlowService import flowService
+from concurrent.futures import ThreadPoolExecutor
+
+resultList = []
+
+start = time.perf_counter()
+def run_io_tasks_in_parallel(tasks):
+    with ThreadPoolExecutor() as executor:
+        running_tasks = [executor.submit(task) for task in tasks]
+        for running_task in running_tasks:
+            resultList.append(running_task.result())
+
+
+run_io_tasks_in_parallel([
+    lambda: pyroService(),
+    lambda: bvService(),
+    lambda: flowService()
+])
 
 style = """
     table {
@@ -32,21 +51,22 @@ HTMLBody = f'''
         </style>
     </head>
     <body>
-        {BVHITLResult}
+        {resultList[0]}
     <br>
-        {pyroHITLResult}
+        {resultList[1]}
     <br>
-        {flowFinalResults}
+        {resultList[2]}
     </body>
 </html>  
 '''
 mailAttachment = f""" 
-    {BVHITLResult}
-    {pyroHITLResult}
-    {flowFinalResults}
+    {resultList[0]}
+    {resultList[1]}
+    {resultList[2]}
 """
 
 with open("body.txt", "w") as file:
     file.write(mailAttachment)
-
+end = time.perf_counter()
+print(f'elapsed {end-start:0.2f} seconds')
 print("Generated HTML Content")
