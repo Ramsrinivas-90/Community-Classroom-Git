@@ -1,9 +1,4 @@
-import concurrent.futures
-import multiprocessing
-from concurrent.futures import ThreadPoolExecutor, as_completed, ProcessPoolExecutor
-import time
-import random
-
+from concurrent.futures import ThreadPoolExecutor
 import mysql.connector
 
 
