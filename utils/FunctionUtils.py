@@ -1,3 +1,5 @@
+from concurrent.futures import ThreadPoolExecutor
+
 import mysql.connector
 
 
@@ -12,6 +14,27 @@ def DBConnect(user, password, port):
     )
     print("DB connected successfully")
     return ICEe
+
+
+def processQuery(queryList, cursor):
+    resultList = []
+
+    def run_io_tasks_in_parallel(tasks):
+        with ThreadPoolExecutor() as executor:
+            running_tasks = [executor.submit(task) for task in tasks]
+            for running_task in running_tasks:
+                resultList.append(running_task.result())
+
+    run_io_tasks_in_parallel([
+        lambda: [queryR(query, cursor) for query in queryList]
+    ])
+    return resultList[0]
+
+
+def queryR(query, cursor) -> list:
+    cursor.execute(query)
+    count = cursor.fetchall()
+    return count
 
 
 # function to execute queries and fetching results

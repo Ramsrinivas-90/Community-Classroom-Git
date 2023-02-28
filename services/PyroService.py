@@ -1,35 +1,38 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPORT
+from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPort
 
-ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPORT)
 
-# list of queries to get data for mail
-queriesListPyro = [classificationDetails,
-                   extractionDetails, totalCount, splitCount]
+def pyroService():
+    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
 
-# mysql cursor for executing query
-cursorPyro = ICEe.cursor()
+    # list of queries to get data for mail
+    queriesListPyro = [classificationDetails,
+                       extractionDetails, totalCount, splitCount]
 
-# calling queryRun method in common function to execute and fetching results to resultListPyro
-resultListPyro = queryRun(queriesListPyro, cursorPyro)
+    # mysql cursor for executing query
+    cursorPyro = ICEe.cursor()
 
-# fetching classification HITL counts both queued and success notified
-classificationHITL = resultListPyro[0]
+    # calling queryRun method in common function to execute and fetching results to resultListPyro
+    resultListPyro = processQuery(queriesListPyro, cursorPyro)
 
-# fetching extraction HITL counts both queued and success notified
-extractionHITL = resultListPyro[1]
+    # fetching classification HITL counts both queued and success notified
+    classificationHITL = resultListPyro[0]
 
-# fetching total number of docs uploaded
-totalDocPyro = resultListPyro[2][0][0]
+    # fetching extraction HITL counts both queued and success notified
+    extractionHITL = resultListPyro[1]
 
-# fetching split count of extraction with doc types
-splitCountExtrctnPyro = resultListPyro[3]
+    # fetching total number of docs uploaded
+    totalDocPyro = resultListPyro[2][0][0]
 
-# calling formatter method from commonFunction to get HTML Format of cls and ext HITL Table
-pyroHITLResult = formatter(
-    classificationHITL, extractionHITL, "Pyro V2 Originations", totalDocPyro, splitCountExtrctnPyro)
+    # fetching split count of extraction with doc types
+    splitCountExtrctnPyro = resultListPyro[3]
 
+    # calling formatter method from commonFunction to get HTML Format of cls and ext HITL Table
+    pyroHITLResult = formatter(
+        classificationHITL, extractionHITL, "Pyro V2 Originations", totalDocPyro, splitCountExtrctnPyro)
+    print('Pyro Done')
+    return pyroHITLResult
 
 # # initializing empty string for formatting HTML for split count of ext
 # splitCountTable = ''
