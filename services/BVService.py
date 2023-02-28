@@ -13,7 +13,8 @@ def bvService():
     cursorBV = ICEe.cursor()
 
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultListBV = queryRun(queriesListBV, cursorBV)
+    resultListBV = processQuery(queriesListBV, cursorBV)
+    ICEe.close()
     # fetching classification HITL counts both queued and success notified
     classificationHITLBV = resultListBV[0]
 
