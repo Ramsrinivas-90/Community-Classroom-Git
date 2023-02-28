@@ -13,7 +13,7 @@ def pyroService():
     cursorPyro = ICEe.cursor()
 
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultListPyro = queryRun(queriesListPyro, cursorPyro)
+    resultListPyro = processQuery(queriesListPyro, cursorPyro)
     ICEe.close()
     # fetching classification HITL counts both queued and success notified
     classificationHITL = resultListPyro[0]

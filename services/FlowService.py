@@ -11,7 +11,7 @@ def flowService():
     # mysql cursor for executing query
     cursor = ICEe.cursor()
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultFlow = queryRun(queriesListFLOW, cursor)
+    resultFlow = processQuery(queriesListFLOW, cursor)
     ICEe.close()
     flowClassification = resultFlow[0]
     flowClsCompleted = resultFlow[1]

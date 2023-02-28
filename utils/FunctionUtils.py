@@ -24,19 +24,25 @@ def DBConnect(user, password, port):
 
 
 def processQuery(queryList, cursor):
-    with concurrent.futures.ThreadPoolExecutor() as executor:
+    resultList = []
 
-        futures = []
+    def run_io_tasks_in_parallel(tasks):
+        with ThreadPoolExecutor() as executor:
+            running_tasks = [executor.submit(task) for task in tasks]
+            for running_task in running_tasks:
+                resultList.append(running_task.result())
 
-        for query in queryList:
-            futures.append(executor.submit(queryR(query,cursor)))
+    run_io_tasks_in_parallel([
+        lambda: [queryR(query, cursor) for query in queryList]
+    ])
+    return resultList[0]
 
 
 def queryR(query, cursor) -> list:
     cursor.execute(query)
     count = cursor.fetchall()
-    print(count)
     return count
+
 
 # function to execute queries and fetching results
 def queryRun(queryList, cursor):
@@ -54,7 +60,7 @@ def extractionDocTable(splitCount, useCase):
     # initializing loop length
     batchLoop = len(splitCount)
     sentence = ''
-    if (useCase == 'FLOW'):
+    if useCase == 'FLOW':
         sentence = 'completed'
     else:
         sentence = 'HITL Success Notified'
@@ -78,8 +84,6 @@ def extractionDocTable(splitCount, useCase):
 
 
 # Generating HTML based String for mail body
-
-
 def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCount):
     HITLModifyTable = ''
     HITLTableList = [classificationHITL, extractionHITL]
