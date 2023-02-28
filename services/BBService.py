@@ -3,10 +3,10 @@ from queries.BB import *
 from utils.FunctionUtils import *
 from datetime import date
 from datetime import timedelta
-from utils.Env import BBDBPassword, BBDBUserName, BBDBPORT
+from utils.Env import BBDBPassword, BBDBUserName, BBDBPort
 import json
 
-ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPORT)
+ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPort)
 cursorBB = ICEe.cursor()
 path = '../Batches.json'
 yesterday = date.today() - timedelta(1)
