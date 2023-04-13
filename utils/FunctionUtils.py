@@ -26,12 +26,12 @@ def processQuery(queryList, cursor):
                 resultList.append(running_task.result())
 
     run_io_tasks_in_parallel([
-        lambda: [queryR(query, cursor) for query in queryList]
+        lambda: [executeQuery(query, cursor) for query in queryList]
     ])
     return resultList[0]
 
 
-def queryR(query, cursor) -> list:
+def executeQuery(query, cursor) -> list:
     cursor.execute(query)
     count = cursor.fetchall()
     return count

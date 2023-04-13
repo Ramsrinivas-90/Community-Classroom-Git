@@ -51,7 +51,12 @@ GROUP BY a.WRKFLW_STEP_TYPE_ID , a.WRKFLW_STS_TYPE_ID;"""
 
 ingestionBlobs = '''SELECT Batch_ID,count(1) from ICE_Ingestion.ICEIngestion where Status is NULL group by Batch_ID;'''
 
-bbExtractionSplitCountQuery = '''SELECT DOC_TYPE,Count(DOC_TYPE) FROM ICEe.EDA_EXTRCTN_WRKFLW_DTL where BLOB_DTL_ID in (select I.BLOB_DTL_ID
-from ICEe.EDA_EXTRCTN_WRKFLW_DTL W left join INGS_BLOB_DTL I on W.BLOB_DTL_ID = I.BLOB_DTL_ID
-where W.CURR_IND = '1' AND W.CRE_DTTM >= NOW() - INTERVAL 24 HOUR AND WRKFLW_STS_TYPE_ID = '11' AND (I.QUEUE_TYPE_ID > 1 AND I.QUEUE_TYPE_ID < 7
-        OR (I.QUEUE_TYPE_ID > 37))) and CURR_IND = '1' AND CRE_DTTM >= NOW() - INTERVAL 24 HOUR group by DOC_TYPE;'''
+bbExtractionSplitCountQuery = '''Select DOC_TYPE,count(1) as COUNT from (select W.DOC_TYPE
+from EDA_EXTRCTN_WRKFLW_DTL W
+where
+W.CURR_IND = 1 AND 
+W.WRKFLW_STEP_TYPE_ID = 11 AND
+W.WRKFLW_STS_TYPE_ID = 2 AND
+ (W.QUEUE_TYPE_ID > 1 AND W.QUEUE_TYPE_ID < 7
+        OR (W.QUEUE_TYPE_ID > 37)) AND
+W.CRE_DTTM >= NOW() - INTERVAL 24 HOUR)B group by DOC_TYPE;'''

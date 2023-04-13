@@ -10,16 +10,34 @@ path = '../Batches.json'
 yesterday = date.today() - timedelta(1)
 
 
+def formatBatchDetails(batchDetails):
+    if len(batchDetails) == 0:
+        return "No batches were uploaded in last 24 hour."
+    batchDetailsTable = '''
+        <table>
+        <tr>
+          <th>Queue</th>
+          <th>Batch</th>
+          <th>Uploaded Date</th>
+        </tr>'''
+    for batchDetail in batchDetails:
+        batchDetailsTable += f'<tr><td>{str(batchDetail[0])}</td>' \
+                             f'<td>{str(batchDetail[1])}</td>' \
+                             f'<td>{str(batchDetail[2])}</td></tr>'
+    batchDetailsTable += '</table>'
+    return batchDetailsTable
+
+
 def get_batch(inptDate):
     ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     cursorBB = ICEe.cursor()
-    getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,SII.CRE_DTTM FROM ICE_Ingestion.STG_ICEIngestion SII 
+    getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,DATE_FORMAT(SII.CRE_DTTM, '%Y-%m-%d')  FROM ICE_Ingestion.STG_ICEIngestion SII 
     join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" 
     order by SII.Batch_ID; """.format(
         inptDate)]
-    get_batch_result = processQuery(getBatchQuery, cursorBB)
+    get_batch_result = processQuery(getBatchQuery, cursorBB)[0]
 
-    return get_batch_result[0]
+    return formatBatchDetails(get_batch_result)
 
 
 def bbService():
@@ -27,15 +45,15 @@ def bbService():
     cursorBB = ICEe.cursor()
     print("Starting BB Service")
     batch = get_batch(yesterday)
-    batchList = []
-    for i in range(0, len(batch)):
-        batchList.append(batch[i][0])
-    batchDict = {}
-    for i in range(0, len(batchList)):
-        batchDict[batchList[i]] = []
-        for j in range(0, len(batch)):
-            if batch[j][0] == batchList[i]:
-                batchDict[batchList[i]].append(batch[j][1])
+    # batchList = []
+    # for i in range(0, len(batch)):
+    #     batchList.append(batch[i][0])
+    # batchDict = {}
+    # for i in range(0, len(batchList)):
+    #     batchDict[batchList[i]] = []
+    #     for j in range(0, len(batch)):
+    #         if batch[j][0] == batchList[i]:
+    #             batchDict[batchList[i]].append(batch[j][1])
     queriesListBB = [classificationQuery, extractionQuery, ingestionBlobs]
     resultListBB = processQuery(queriesListBB, cursorBB)
     if resultListBB[2]:
@@ -46,16 +64,16 @@ def bbService():
     bbClassificationDetails = ["CLASSIFICATIONBLOBS", "CLASSIFICATIONPAGES"]
     bbExtractionDetails = ["EXTRACTIONBLOBS", "EXTRACTIONPAGES"]
     blobBusterUpdate = ''
-    batchLoop = len(list(batchDict.keys()))
-    if batchLoop:
-        for i in range(0, batchLoop):
-            blobBusterUpdate += 'Batch ' + \
-                                str(batchDict[list(batchDict.keys())[i]]) + ' in ' + \
-                                list(batchDict.keys())[i] + ',\n'
-        blobBusterUpdate = blobBusterUpdate.replace("[", "").replace("]", "") + "uploaded in last 24 hours."
-
-    elif batchLoop == 0:
-        blobBusterUpdate += "No batches were uploaded in last 24 hour."
+    # batchLoop = len(list(batchDict.keys()))
+    # if batchLoop:
+    #     for i in range(0, batchLoop):
+    #         blobBusterUpdate += 'Batch ' + \
+    #                             str(batchDict[list(batchDict.keys())[i]]) + ' in ' + \
+    #                             list(batchDict.keys())[i] + ',\n'
+    #     blobBusterUpdate = blobBusterUpdate.replace("[", "").replace("]", "") + "uploaded in last 24 hours."
+    #
+    # elif batchLoop == 0:
+    #     blobBusterUpdate += "No batches were uploaded in last 24 hour."
 
     if ingestBlob:
         blobBusterUpdate += "Blobs are still in progress"
@@ -82,7 +100,8 @@ def bbService():
             </li>
         </ul>"""
     bbResult = f'''<h3>Servicing:</h3>
-      <p>{blobBusterUpdate}</p>
+      <p>{batch}</p>
+      <br/>
       <table>
         <tr>
           <th>Count/Type</th>
