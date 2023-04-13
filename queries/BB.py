@@ -13,16 +13,15 @@ WHERE
         AND a.CRE_DTTM <= NOW()
         AND a.WRKFLW_STEP_TYPE_ID = 5
         AND a.WRKFLW_STS_TYPE_ID = 2
+        AND (a.QUEUE_TYPE_ID > 1 AND a.QUEUE_TYPE_ID < 7
+        OR (a.QUEUE_TYPE_ID > 37))
 GROUP BY a.WRKFLW_STEP_TYPE_ID , a.WRKFLW_STS_TYPE_ID;"""
 
 extractionQuery = """SELECT 
     COUNT(*) AS CNT,
-    SUM(pg_cnt.PAGE_COUNT) AS pages,
-    SUM(pg_cnt.PAGE_COUNT) / TIMESTAMPDIFF(MINUTE,
-        NOW() - INTERVAL 24 HOUR,
-        NOW()) AS PagePerMin
+    SUM(pg_cnt.PAGE_COUNT) AS pages
 FROM
-    ICEe.EXTRCTN_WRKFLW_DTL a
+    ICEe.EDA_EXTRCTN_WRKFLW_DTL a
         JOIN
     ICEe.INGS_BLOB_DTL b ON a.BLOB_DTL_ID = b.BLOB_DTL_ID
         JOIN
@@ -38,7 +37,7 @@ FROM
         cp.BLOB_DTL_ID IN (SELECT 
                 BLOB_DTL_ID
             FROM
-                EXTRCTN_WRKFLW_DTL
+                EDA_EXTRCTN_WRKFLW_DTL
             WHERE
                 CRE_DTTM > NOW() - INTERVAL 24 HOUR)
     GROUP BY cp.BLOB_DTL_ID) pg_cnt ON pg_cnt.BLOB_DTL_ID = a.BLOB_DTL_ID
@@ -46,6 +45,13 @@ WHERE
     a.CRE_DTTM >= NOW() - INTERVAL 24 HOUR
         AND a.WRKFLW_STEP_TYPE_ID = 11
         AND a.WRKFLW_STS_TYPE_ID = 2
+        AND (a.QUEUE_TYPE_ID > 1 AND a.QUEUE_TYPE_ID < 7
+        OR (a.QUEUE_TYPE_ID > 37))
 GROUP BY a.WRKFLW_STEP_TYPE_ID , a.WRKFLW_STS_TYPE_ID;"""
 
 ingestionBlobs = '''SELECT Batch_ID,count(1) from ICE_Ingestion.ICEIngestion where Status is NULL group by Batch_ID;'''
+
+bbExtractionSplitCountQuery = '''SELECT DOC_TYPE,Count(DOC_TYPE) FROM ICEe.EDA_EXTRCTN_WRKFLW_DTL where BLOB_DTL_ID in (select I.BLOB_DTL_ID
+from ICEe.EDA_EXTRCTN_WRKFLW_DTL W left join INGS_BLOB_DTL I on W.BLOB_DTL_ID = I.BLOB_DTL_ID
+where W.CURR_IND = '1' AND W.CRE_DTTM >= NOW() - INTERVAL 24 HOUR AND WRKFLW_STS_TYPE_ID = '11' AND (I.QUEUE_TYPE_ID > 1 AND I.QUEUE_TYPE_ID < 7
+        OR (I.QUEUE_TYPE_ID > 37))) and CURR_IND = '1' AND CRE_DTTM >= NOW() - INTERVAL 24 HOUR group by DOC_TYPE;'''

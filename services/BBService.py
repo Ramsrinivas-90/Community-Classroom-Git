@@ -3,17 +3,15 @@ from queries.BB import *
 from utils.FunctionUtils import *
 from datetime import date
 from datetime import timedelta
-from utils.Env import BBDBPassword, BBDBUserName, BBDBPort
+from utils.Env import PYRODBUserName, PYRODBPassword, PYRODBPort
 import json
-
 
 path = '../Batches.json'
 yesterday = date.today() - timedelta(1)
 
 
-
 def get_batch(inptDate):
-    ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPort)
+    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     cursorBB = ICEe.cursor()
     getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,SII.CRE_DTTM FROM ICE_Ingestion.STG_ICEIngestion SII 
     join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" 
@@ -25,9 +23,9 @@ def get_batch(inptDate):
 
 
 def bbService():
-    ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPort)
+    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     cursorBB = ICEe.cursor()
-    print("BB starts")
+    print("Starting BB Service")
     batch = get_batch(yesterday)
     batchList = []
     for i in range(0, len(batch)):
@@ -63,7 +61,6 @@ def bbService():
         blobBusterUpdate += "Blobs are still in progress"
     else:
         blobBusterUpdate += "No more blobs yet to be ingested"
-    print('Batch Details Done')
     for i in range(2):
         dictBB[bbClassificationDetails[i]] = 0
         if resultListBB[0]:
@@ -84,7 +81,7 @@ def bbService():
         <p> BB Throughput in last 24 hour - {throughput}  PagesPerMin </p>
             </li>
         </ul>"""
-    bbResult = f'''<h3>Blob Buster:</h3>
+    bbResult = f'''<h3>Servicing:</h3>
       <p>{blobBusterUpdate}</p>
       <table>
         <tr>
@@ -104,30 +101,32 @@ def bbService():
         </tr>
       </table>
       {throughputBody}'''
-    print('BB Done')
+    print("BB Service Ends")
     return bbResult
 
 
-def magService():
-    ICEe = DBConnect(BBDBUserName, BBDBPassword, BBDBPort)
+def BBExtractionService():
+    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     cursorBB = ICEe.cursor()
-    print("Starting mag")
-    queriesListMag = [magNOTE, magMortgage, magAppraisal, mag1003, magW9, magSSN, magCD]
-    resultListMag = processQuery(queriesListMag, cursorBB)
-    dictMag = {}
-    magDoc = ["NOTE", "MORTGAGE", "APPRAISAL", "1003",  "W9", "SSN", "CD"]
-    for i in range(7):
-        if len(resultListMag[i]) == 0:
-            dictMag[magDoc[i]] = 0
-        else:
-            dictMag[magDoc[i]] = resultListMag[i][0][2]
-
-    magTable = ""
-    for i in range(0, len(magDoc)):
-        magTable += '<tr>' + \
-                    '<td>' + magDoc[i] + '</td>' + \
-                    '<td>' + str(dictMag[magDoc[i]]) + '</td>' + \
-                    '</tr>'
-    print('MAG Done')
-    return magTable
-
+    print("Starting BB Extraction Service")
+    # queriesListMag = [magNOTE, magMortgage, magAppraisal, mag1003, magW9, magSSN, magCD]
+    # resultListMag = processQuery(queriesListMag, cursorBB)
+    # dictMag = {}
+    # magDoc = ["NOTE", "MORTGAGE", "APPRAISAL", "1003",  "W9", "SSN", "CD"]
+    # for i in range(7):
+    #     if len(resultListMag[i]) == 0:
+    #         dictMag[magDoc[i]] = 0
+    #     else:
+    #         dictMag[magDoc[i]] = resultListMag[i][0][2]
+    #
+    # magTable = ""
+    # for i in range(0, len(magDoc)):
+    #     magTable += '<tr>' + \
+    #                 '<td>' + magDoc[i] + '</td>' + \
+    #                 '<td>' + str(dictMag[magDoc[i]]) + '</td>' + \
+    #                 '</tr>'
+    # print('MAG Done')
+    resultListEXTBB = processQuery([bbExtractionSplitCountQuery], cursorBB)
+    BBExtTable = extractionDocTable(resultListEXTBB[0], "Servicing")
+    print("BB Extraction Service Ends")
+    return BBExtTable

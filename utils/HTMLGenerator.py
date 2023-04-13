@@ -1,7 +1,7 @@
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-from services.BBService import bbService, magService
+from services.BBService import bbService, BBExtractionService
 from services.PyroService import pyroService
 from services.BVService import bvService
 from services.FlowService import flowService
@@ -21,7 +21,7 @@ run_io_tasks_in_parallel([
     lambda: bvService(),
     lambda: pyroService(),
     lambda: flowService(),
-    lambda: magService(),
+    lambda: BBExtractionService(),
     lambda: bbService()
 ])
 
@@ -64,17 +64,12 @@ htmlbody = f"""<html>
         {resultList[0]}
         <br>
         {resultList[1]}
-        <br>
+        <br/>
         {resultList[2]}
         {resultList[4]}
-      <h3>MAG Update:</h3>
-      <table>
-        <tr>
-          <th>Doc Type</th>
-          <th>Count</th>
-        </tr>
+        <br/>
         {resultList[3]}
-      </table>
+        <br/>
       <br />
     </body>
   </html>

@@ -4,9 +4,10 @@ from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPort
 
 
 def flowService():
+    print("Flow Service Starts")
     ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     # resultList of queries to get data for mail
-    queriesListFLOW = [flowQuery,
+    queriesListFLOW = [flowIngestionStatus,
                        flowCompleted, flowDocs, flowExtractionDocCount]
     # mysql cursor for executing query
     cursor = ICEe.cursor()
@@ -71,7 +72,7 @@ def flowService():
             """
     else:
         flowFinalResults += "<p>No Docs were uploaded in last 24 hours.</p>"
-    print("Flow Done")
+    print("Flow Service Ends")
     return flowFinalResults
 
 

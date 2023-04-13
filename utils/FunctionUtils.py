@@ -51,14 +51,16 @@ def extractionDocTable(splitCount, useCase):
     splitCountTable = ''
 
     # initializing loop length
-    batchLoop = len(splitCount)
+    loopLength = len(splitCount)
+    if loopLength==0:
+        return ''
     sentence = ''
-    if useCase == 'FLOW':
+    if useCase == 'FLOW' or useCase == 'Servicing':
         sentence = 'completed'
     else:
         sentence = 'HITL Success Notified'
     # formatting split count table of ext for HTML
-    for i in range(0, batchLoop):
+    for i in range(0, loopLength):
         splitCountTable += '<tr>' + \
                            '<td>' + splitCount[i][0] + '</td>' + \
                            '<td>' + str(splitCount[i][1]) + '</td>' + \
