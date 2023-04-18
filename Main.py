@@ -11,7 +11,7 @@ smtp_port = 25
 # Create the email message
 
 msg['Subject'] = 'Status On Production Blobs'
-msg['From'] = MailTo
+msg['From'] = from_mail
 msg['To'] = to_mail
 
 # Send mail

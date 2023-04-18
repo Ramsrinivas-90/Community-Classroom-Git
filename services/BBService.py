@@ -5,7 +5,6 @@ from datetime import timedelta
 from utils.Env import PYRODBUserName, PYRODBPassword, PYRODBPort
 import json
 
-path = '../Batches.json'
 yesterday = date.today() - timedelta(1)
 
 
