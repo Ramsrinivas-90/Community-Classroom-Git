@@ -1,4 +1,3 @@
-from queries.MAG import *
 from queries.BB import *
 from utils.FunctionUtils import *
 from datetime import date
@@ -14,6 +13,7 @@ def formatBatchDetails(batchDetails):
     if len(batchDetails) == 0:
         return "No batches were uploaded in last 24 hour."
     batchDetailsTable = '''
+        <p>PFB batches uploaded in blob buster last 24 hour.</p> 
         <table>
         <tr>
           <th>Queue</th>
@@ -99,7 +99,7 @@ def bbService():
         <p> BB Throughput in last 24 hour - {throughput}  PagesPerMin </p>
             </li>
         </ul>"""
-    bbResult = f'''<h3>Servicing:</h3>
+    bbResult = f'''<h3>Blob Buster:</h3>
       <p>{batch}</p>
       <br/>
       <table>
