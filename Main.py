@@ -1,14 +1,24 @@
-import win32com.client as client
-
+import smtplib
 from utils.Env import MailTo
-from utils.HTMLGenerator import htmlbody
+from utils.HTMLGenerator import msg
 
-outlook = client.Dispatch('Outlook.Application')
-mail = outlook.CreateItem(0)
-mail.display()
-mail.To = MailTo
-mail.Subject = 'Status On Production Blobs'
-mail.htmlbody = htmlbody
+# Settings
+from_mail = MailTo
+to_mail = MailTo
 
-if mail.send:
-    print('Mail Sent')
+smtp_server = "smtpgw.chec.local"
+smtp_port = 25
+# Create the email message
+
+msg['Subject'] = 'Status On Production Blobs'
+msg['From'] = MailTo
+msg['To'] = to_mail
+
+# Send mail
+try:
+    smtpObj = smtplib.SMTP(smtp_server)
+    smtpObj.sendmail(from_mail, to_mail, msg.as_string())
+    print("Successfully sent email")
+except smtplib.SMTPException:
+    print("Error: unable to send email")
+

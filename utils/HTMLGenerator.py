@@ -1,5 +1,8 @@
 import time
 from concurrent.futures import ThreadPoolExecutor
+from email.mime.multipart import MIMEMultipart
+
+from future.backports.email.mime.text import MIMEText
 
 from services.BBService import bbService, BBExtractionService
 from services.PyroService import pyroService
@@ -47,13 +50,16 @@ table {
     }
 '''
 
-# html body declaration
-htmlbody = f"""<html>
-  <html>
+msg = MIMEMultipart()
+msg.preamble = 'Status On Production Blobs'
+# Attach HTML body
+msg.attach(MIMEText(
+    f'''
+    <html>
     <head>
-      <style>
+        <style>
         {style}
-      </style>
+        </style>
     </head>
     <body>
       Hi Team,
@@ -69,12 +75,13 @@ htmlbody = f"""<html>
         {resultList[4]}
         <br/>
         {resultList[3]}
-        <br/>
-      <br />
     </body>
-  </html>
-</html>
-"""
+</html>  
+''',
+    'html', 'utf-8'))
+
 end = time.perf_counter()
 print(f'elapsed {end - start:0.2f} seconds')
 print("Generated HTML Content")
+
+
