@@ -15,8 +15,5 @@ PYROPORT = 3300
 BVUSERNAME = username
 BVPASSWORD = password
 BVPORT = 3301
-BBUSERNAME = username
-BBPASSWORD = password
-BBPORT = 3302
 MAILTO = johndoe@gmail.com
 ```
