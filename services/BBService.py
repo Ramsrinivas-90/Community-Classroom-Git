@@ -146,5 +146,5 @@ def BBExtractionService():
     # print('MAG Done')
     resultListEXTBB = processQuery([bbExtractionSplitCountQuery], cursorBB)
     BBExtTable = extractionDocTable(resultListEXTBB[0], "Servicing")
-    print("BB Extraction Service Ends")
+    print("BB Extraction Doc Split up Service Ends")
     return BBExtTable
