@@ -126,7 +126,7 @@ def bbService():
 def BBExtractionService():
     ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     cursorBB = ICEe.cursor()
-    print("Starting BB Extraction Service")
+    print("Starting BB Extraction Doc Split up Service")
     # queriesListMag = [magNOTE, magMortgage, magAppraisal, mag1003, magW9, magSSN, magCD]
     # resultListMag = processQuery(queriesListMag, cursorBB)
     # dictMag = {}
