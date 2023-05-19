@@ -19,16 +19,12 @@ def DBConnect(user, password, port):
 def processQuery(queryList, cursor):
     resultList = []
 
-    def run_io_tasks_in_parallel(tasks):
-        with ThreadPoolExecutor() as executor:
-            running_tasks = [executor.submit(task) for task in tasks]
-            for running_task in running_tasks:
-                resultList.append(running_task.result())
+    with ThreadPoolExecutor() as executor:
+        running_tasks = [executor.submit(executeQuery, query, cursor) for query in queryList]
+        for running_task in running_tasks:
+            resultList.append(running_task.result())
 
-    run_io_tasks_in_parallel([
-        lambda: [executeQuery(query, cursor) for query in queryList]
-    ])
-    return resultList[0]
+    return resultList
 
 
 def executeQuery(query, cursor) -> list:
@@ -52,7 +48,7 @@ def extractionDocTable(splitCount, useCase):
 
     # initializing loop length
     loopLength = len(splitCount)
-    if loopLength==0:
+    if loopLength == 0:
         return ''
     sentence = ''
     if useCase == 'FLOW' or useCase == 'Servicing':
