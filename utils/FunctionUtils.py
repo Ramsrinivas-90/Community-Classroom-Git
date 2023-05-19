@@ -30,10 +30,8 @@ def processQuery(queryList, cursor):
 
 
 def executeQuery(query, cursor) -> list:
-    print(current_thread().name)
     cursor.execute(query)
     count = cursor.fetchall()
-    print(current_thread().name,"- Done")
     return count
 
 
