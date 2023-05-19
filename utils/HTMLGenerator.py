@@ -12,7 +12,7 @@ from services.FlowService import flowService
 resultList = []
 start = time.perf_counter()
 
-taskList = [bvService,pyroService,flowService,bbService,BBExtractionService]
+taskList = [bvService,pyroService,flowService,BBExtractionService,bbService]
 
 with ThreadPoolExecutor(100) as executor:
     running_tasks = [executor.submit(task) for task in taskList]
