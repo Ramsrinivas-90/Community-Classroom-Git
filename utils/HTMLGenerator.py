@@ -12,21 +12,13 @@ from services.FlowService import flowService
 resultList = []
 start = time.perf_counter()
 
+taskList = [bvService,pyroService,flowService,bbService,BBExtractionService]
 
-def run_io_tasks_in_parallel(tasks):
-    with ThreadPoolExecutor() as executor:
-        running_tasks = [executor.submit(task) for task in tasks]
-        for running_task in running_tasks:
-            resultList.append(running_task.result())
+with ThreadPoolExecutor(100) as executor:
+    running_tasks = [executor.submit(task) for task in taskList]
+    for running_task in running_tasks:
+        resultList.append(running_task.result())
 
-
-run_io_tasks_in_parallel([
-    lambda: bvService(),
-    lambda: pyroService(),
-    lambda: flowService(),
-    lambda: BBExtractionService(),
-    lambda: bbService()
-])
 
 style = '''
 table {

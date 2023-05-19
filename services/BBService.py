@@ -53,12 +53,8 @@ def bbService():
     #     for j in range(0, len(batch)):
     #         if batch[j][0] == batchList[i]:
     #             batchDict[batchList[i]].append(batch[j][1])
-    queriesListBB = [classificationQuery, extractionQuery, ingestionBlobs]
+    queriesListBB = [classificationQuery, extractionQuery]
     resultListBB = processQuery(queriesListBB, cursorBB)
-    if resultListBB[2]:
-        ingestBlob = True
-    else:
-        ingestBlob = False
     dictBB = {}
     bbClassificationDetails = ["CLASSIFICATIONBLOBS", "CLASSIFICATIONPAGES"]
     bbExtractionDetails = ["EXTRACTIONBLOBS", "EXTRACTIONPAGES"]
@@ -73,11 +69,6 @@ def bbService():
     #
     # elif batchLoop == 0:
     #     blobBusterUpdate += "No batches were uploaded in last 24 hour."
-
-    if ingestBlob:
-        blobBusterUpdate += "Blobs are still in progress"
-    else:
-        blobBusterUpdate += "No more blobs yet to be ingested"
     for i in range(2):
         dictBB[bbClassificationDetails[i]] = 0
         if resultListBB[0]:
