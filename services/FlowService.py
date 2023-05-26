@@ -6,7 +6,7 @@ def flowService():
     # resultList of queries to get data for mail
     queriesListFLOW = [flowIngestionStatus,
                        flowCompleted, flowDocs, flowExtractionDocCount]
-    # calling queryRun method in common function to execute and fetching results to resultListPyro
+    # calling processQuery method to execute and fetching results to resultFlow
     resultFlow = processQuery(queriesListFLOW, "PYRO")
     flowClassification = resultFlow[0]
     flowClsCompleted = resultFlow[1]

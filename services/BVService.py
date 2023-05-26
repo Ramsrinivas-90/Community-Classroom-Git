@@ -9,7 +9,7 @@ def bvService():
     # resultList of queries to get data for mail
     queriesListBV = [classificationDetailsBV,
                      extractionDetailsBV, totalCountBV, splitCountBV]
-    # calling queryRun method in common function to execute and fetching results to resultListPyro
+    # calling processQuery method to execute and fetching results to resultListBV
     resultListBV = processQuery(queriesListBV,"BV")
     # fetching classification HITL counts both queued and success notified
     classificationHITLBV = resultListBV[0]

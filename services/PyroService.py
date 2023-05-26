@@ -7,8 +7,7 @@ def pyroService():
     # list of queries to get data for mail
     queriesListPyro = [classificationDetails,
                        extractionDetails, totalCount, splitCount]
-    # mysql cursor for executing query
-    # calling queryRun method in common function to execute and fetching results to resultListPyro
+    # calling processQuery method to execute and fetching results to resultListPyro
     resultListPyro = processQuery(queriesListPyro, "PYRO")
     # fetching classification HITL counts both queued and success notified
     classificationHITL = resultListPyro[0]
