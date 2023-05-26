@@ -5,15 +5,12 @@ from utils.Env import BVDBUserName, BVDBPassword, BVDBPort
 
 def bvService():
     print("Bayview Service Starts")
-    ICEe = DBConnect(BVDBUserName,BVDBPassword, BVDBPort)
+
     # resultList of queries to get data for mail
     queriesListBV = [classificationDetailsBV,
                      extractionDetailsBV, totalCountBV, splitCountBV]
-    # mysql cursor for executing query
-    cursorBV = ICEe.cursor()
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultListBV = processQuery(queriesListBV, cursorBV)
-    ICEe.close()
+    resultListBV = processQuery(queriesListBV,"BV")
     # fetching classification HITL counts both queued and success notified
     classificationHITLBV = resultListBV[0]
     # fetching extraction HITL counts both queued and success notified

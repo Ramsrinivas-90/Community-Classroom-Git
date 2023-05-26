@@ -1,6 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-from threading import current_thread
-
+from utils.Env import *
 import mysql.connector
 
 
@@ -19,19 +18,23 @@ def DBConnect(user, password, port):
 
 def processQuery(queryList, cursor):
     resultList = []
-
-    # with ThreadPoolExecutor(100) as executor:
-    #     running_tasks = [executor.submit(executeQuery, query, cursor) for query in queryList]
-    #     for running_task in running_tasks:
-    #         resultList.append(running_task.result())
-    for query in queryList:
-        resultList.append(executeQuery(query,cursor))
+    with ThreadPoolExecutor(100) as executor:
+        running_tasks = [executor.submit(executeQuery, query, cursor) for query in queryList]
+        for running_task in running_tasks:
+            resultList.append(running_task.result())
     return resultList
 
 
-def executeQuery(query, cursor) -> list:
+def executeQuery(query, useCase) -> list:
+    ICEe = ""
+    if useCase == "BV":
+        ICEe = DBConnect(BVDBUserName,BVDBPassword,BVDBPort)
+    elif useCase == "PYRO":
+        ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
+    cursor = ICEe.cursor()
     cursor.execute(query)
     count = cursor.fetchall()
+    ICEe.close()
     return count
 
 

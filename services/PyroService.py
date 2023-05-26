@@ -1,18 +1,15 @@
 from queries.Pyro import *
 from utils.FunctionUtils import *
-from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPort
 
 
 def pyroService():
     print("PYRO Service Starts")
-    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     # list of queries to get data for mail
     queriesListPyro = [classificationDetails,
                        extractionDetails, totalCount, splitCount]
     # mysql cursor for executing query
-    cursorPyro = ICEe.cursor()
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultListPyro = processQuery(queriesListPyro, cursorPyro)
+    resultListPyro = processQuery(queriesListPyro, "PYRO")
     # fetching classification HITL counts both queued and success notified
     classificationHITL = resultListPyro[0]
     # fetching extraction HITL counts both queued and success notified

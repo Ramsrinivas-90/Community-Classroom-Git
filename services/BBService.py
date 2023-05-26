@@ -28,20 +28,15 @@ def formatBatchDetails(batchDetails):
 
 
 def get_batch(inptDate):
-    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
-    cursorBB = ICEe.cursor()
     getBatchQuery = ["""SELECT IQT.QUEUE_TYPE_DESC,SII.Batch_ID,DATE_FORMAT(SII.CRE_DTTM, '%Y-%m-%d')  FROM ICE_Ingestion.STG_ICEIngestion SII 
     join ICE_Ingestion.INGS_QUEUE_TYPE IQT on SII.QUEUE_TYPE_ID = IQT.QUEUE_TYPE_ID where  SII.CRE_DTTM like "%{}%" 
     order by SII.Batch_ID; """.format(
         inptDate)]
-    get_batch_result = processQuery(getBatchQuery, cursorBB)[0]
-
+    get_batch_result = processQuery(getBatchQuery, "PYRO")[0]
     return formatBatchDetails(get_batch_result)
 
 
 def bbService():
-    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
-    cursorBB = ICEe.cursor()
     print("Starting BB Service")
     batch = get_batch(yesterday)
     # batchList = []
@@ -54,7 +49,7 @@ def bbService():
     #         if batch[j][0] == batchList[i]:
     #             batchDict[batchList[i]].append(batch[j][1])
     queriesListBB = [classificationQuery, extractionQuery]
-    resultListBB = processQuery(queriesListBB, cursorBB)
+    resultListBB = processQuery(queriesListBB, "PYRO")
     dictBB = {}
     bbClassificationDetails = ["CLASSIFICATIONBLOBS", "CLASSIFICATIONPAGES"]
     bbExtractionDetails = ["EXTRACTIONBLOBS", "EXTRACTIONPAGES"]
@@ -115,8 +110,6 @@ def bbService():
 
 
 def BBExtractionService():
-    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
-    cursorBB = ICEe.cursor()
     print("Starting BB Extraction Doc Split up Service")
     # queriesListMag = [magNOTE, magMortgage, magAppraisal, mag1003, magW9, magSSN, magCD]
     # resultListMag = processQuery(queriesListMag, cursorBB)
@@ -135,7 +128,7 @@ def BBExtractionService():
     #                 '<td>' + str(dictMag[magDoc[i]]) + '</td>' + \
     #                 '</tr>'
     # print('MAG Done')
-    resultListEXTBB = processQuery([bbExtractionSplitCountQuery], cursorBB)
+    resultListEXTBB = processQuery([bbExtractionSplitCountQuery], "PYRO")
     BBExtTable = extractionDocTable(resultListEXTBB[0], "Servicing")
     print("BB Extraction Doc Split up Service Ends")
     return BBExtTable

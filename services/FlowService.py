@@ -1,19 +1,13 @@
 from queries.Flow import *
 from utils.FunctionUtils import *
-from utils.Env import PYRODBPassword, PYRODBUserName, PYRODBPort
-
 
 def flowService():
     print("Flow Service Starts")
-    ICEe = DBConnect(PYRODBUserName, PYRODBPassword, PYRODBPort)
     # resultList of queries to get data for mail
     queriesListFLOW = [flowIngestionStatus,
                        flowCompleted, flowDocs, flowExtractionDocCount]
-    # mysql cursor for executing query
-    cursor = ICEe.cursor()
     # calling queryRun method in common function to execute and fetching results to resultListPyro
-    resultFlow = processQuery(queriesListFLOW, cursor)
-    ICEe.close()
+    resultFlow = processQuery(queriesListFLOW, "PYRO")
     flowClassification = resultFlow[0]
     flowClsCompleted = resultFlow[1]
     flowSellers = resultFlow[2]
