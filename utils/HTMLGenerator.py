@@ -1,9 +1,7 @@
 import time
 from concurrent.futures import ThreadPoolExecutor
 from email.mime.multipart import MIMEMultipart
-
 from future.backports.email.mime.text import MIMEText
-
 from services.BBService import bbService, BBExtractionService
 from services.PyroService import pyroService
 from services.BVService import bvService
