@@ -77,7 +77,7 @@ msg.attach(MIMEText(
         <div  style="color:#8fa1a6;font-weight:bold;font-family:SF UI Display;">
         Regards,
         <div style="color:#5F99F1;font-weight:bold;font-size:16px;font-family:SF UI Display">
-        Aravinth Kumar</div>
+        Status Mailer</div>
         </div>
          </td>
             </tr>
