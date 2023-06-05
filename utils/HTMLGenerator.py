@@ -52,7 +52,7 @@ msg.attach(MIMEText(
         {style}
         </style>
 </head>
-  <body style="margin: 0px; padding: 0px; background-color: #ADD8E6; background-position: top center;">
+  <body style="margin: 0px; padding: 0px; background-color:#004261; background-position: top center;">
   <!-- BODY FAKE PANEL -->
         <!-- CENTER FLOAT -->
           <table width="1200" valign="top" align="center" bgcolor="#FFFFFF">
@@ -92,5 +92,3 @@ msg.attach(MIMEText(
 end = time.perf_counter()
 print(f'elapsed {end - start:0.2f} seconds')
 print("Generated HTML Content")
-file = open("test.html", "w")
-file.write("%s" % msg.as_string())
