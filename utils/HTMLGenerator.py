@@ -52,10 +52,10 @@ msg.attach(MIMEText(
         {style}
         </style>
 </head>
-  <body style="margin: 0px; padding: 0px; background-color: #0D679C; background-position: top center;">
+  <body style="margin: 0px; padding: 0px; background-color: #ADD8E6; background-position: top center;">
   <!-- BODY FAKE PANEL -->
         <!-- CENTER FLOAT -->
-          <table width="800" valign="top" align="center" bgcolor="#FFFFFF">
+          <table width="1200" valign="top" align="center" bgcolor="#FFFFFF">
             <tr>
               <td align="center">
     <div style="text-align:left;margin:20px 30px;">
@@ -76,7 +76,7 @@ msg.attach(MIMEText(
         <br/>
         <div  style="color:#8fa1a6;font-weight:bold;font-family:SF UI Display;">
         Regards,
-        <div style="color:#34c3eb;font-weight:bold;font-size:16px;font-family:SF UI Display">
+        <div style="color:#5F99F1;font-weight:bold;font-size:16px;font-family:SF UI Display">
         Aravinth Kumar</div>
         </div>
          </td>
