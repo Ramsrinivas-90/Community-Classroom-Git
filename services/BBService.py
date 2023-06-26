@@ -57,10 +57,10 @@ def bbService():
     #     blobBusterUpdate += "No batches were uploaded in last 24 hour."
     for i in range(2):
         dictBB[bbClassificationDetails[i]] = 0
-        dictBB[bbExtractionDetails[i]] = 0
         if resultListBB[0]:
             dictBB[bbClassificationDetails[i]] = resultListBB[0][0][i]
-        if resultListBB[1][0][0] != 0:
+        dictBB[bbExtractionDetails[i]] = 0
+        if resultListBB[1]:
             dictBB[bbExtractionDetails[i]] = resultListBB[1][0][i]
     if resultListBB[0]:
         throughput = resultListBB[0][0][2]
