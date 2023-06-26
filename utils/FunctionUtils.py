@@ -67,14 +67,13 @@ def extractionDocTable(splitCount, useCase):
                            '<td>' + str(splitCount[i][1]) + '</td>' + \
                            '</tr>'
     extCountTable = f'''
-        <br>
-        <div> Below is the split up of documents for extraction {sentence}, </div>
+        <p> Below is the split up of documents for extraction {sentence}, </p>
         <table>
             <tr>
                 <th> DocType </th>
                 <th> Count </th>
             </tr>
-        <div> {splitCountTable}</div>
+        <p> {splitCountTable}</p>
         </table>
         '''
     return extCountTable
@@ -97,7 +96,7 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
         HITLModifyTable = ''
     splitCountTable = extractionDocTable(splitCount, useCase)
     HITLTable = f'''
-        <h3>{useCase}:</h3><div>Total Docs uploaded in last 24 hours - {totalCount} </div>
+        <h3>{useCase}:</h3><p>Total Docs uploaded in last 24 hours - {totalCount} </p>
         <table>
             <tr>
                 <th>Type/HITL Status</th>
@@ -112,10 +111,12 @@ def formatter(classificationHITL, extractionHITL, useCase, totalCount, splitCoun
                 <th>Extraction</th>
                 {HITLResultList[1]}
             </tr>
-       </table> 
+       </table>   
+        <br>
             {splitCountTable}
+        <br>
     '''
 
     if totalCount == 0:
-        return f"""<h3> {useCase}: </h3> <div>No Docs uploaded in last 24 hours </div>"""
+        return f"""<h3> {useCase}: </h3> <p>No Docs uploaded in last 24 hours </p>"""
     return HITLTable

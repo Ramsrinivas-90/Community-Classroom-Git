@@ -12,7 +12,7 @@ def formatBatchDetails(batchDetails):
     if len(batchDetails) == 0:
         return "No batches were uploaded in last 24 hour."
     batchDetailsTable = '''
-        <div>PFB batches uploaded in blob buster last 24 hour.</div> 
+        <p>PFB batches uploaded in blob buster last 24 hour.</p> 
         <table>
         <tr>
           <th>Queue</th>
@@ -39,6 +39,15 @@ def get_batch(inptDate):
 def bbService():
     print("Starting BB Service")
     batch = get_batch(yesterday)
+    # batchList = []
+    # for i in range(0, len(batch)):
+    #     batchList.append(batch[i][0])
+    # batchDict = {}
+    # for i in range(0, len(batchList)):
+    #     batchDict[batchList[i]] = []
+    #     for j in range(0, len(batch)):
+    #         if batch[j][0] == batchList[i]:
+    #             batchDict[batchList[i]].append(batch[j][1])
     queriesListBB = [classificationQuery, extractionQuery]
     resultListBB = processQuery(queriesListBB, "PYRO")
     dictBB = {}
@@ -76,7 +85,8 @@ def bbService():
             </li>
         </ul>"""
     bbResult = f'''<h3>Blob Buster:</h3>
-      <div>{batch}</div>
+      <p>{batch}</p>
+      <br/>
       <table>
         <tr>
           <th>Count/Type</th>

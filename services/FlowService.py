@@ -51,7 +51,8 @@ def flowService():
                 <td>{fileValidationFailed}</td>
             </tr>
             </table>
-            <br/>
+            <br>
+            <br>
             <table id="seller">
             <tr>
                 <th>Seller</th>
@@ -60,10 +61,11 @@ def flowService():
             </tr>
             {flowSellerDetails}
             </table>
+            <br>
             {extDocTable}
             """
     else:
-        flowFinalResults += "<div>No Docs were uploaded in last 24 hours.</div>"
+        flowFinalResults += "<p>No Docs were uploaded in last 24 hours.</p>"
     print("Flow Service Ends")
     return flowFinalResults
 
