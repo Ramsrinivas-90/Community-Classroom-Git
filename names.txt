@@ -4,3 +4,5 @@ hi
 date:22/11/2023
 Good morning
 this line added by me in master branch to understand merge conflict when pushing feature branch to master
+merge  conflict arised when I pushed feature to master since same ln 6 is modified in same named file names.txt
+resolved by removing the changes in feature file names.txt line 6
