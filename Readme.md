@@ -1,7 +1,7 @@
 # Mail Scirpt
 
 ## Summary
-
+Adding this line to understand merge conflict
 This script is to send status mail by getting required details from db and generating mail content.
 
 ## To run this script 
